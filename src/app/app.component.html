@@ -1,0 +1,37 @@
+<form class="example-form">
+  <mat-form-field class="example-full-width" data-testid="autocomplete-form-field">
+    <mat-label data-testid="autocomplete-label">Number</mat-label>
+    <input type="text"
+           data-testid="autocomplete-input"
+           placeholder="Pick one"
+           aria-label="Number"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto">
+
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" data-testid="autocomplete-component">
+      @for (option of filteredOptions | async; track option) {
+        <mat-option [value]="option" data-testid="autocomplete-option">{{option}}</mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field data-testid="select-form-field">
+    <mat-label data-testid="select-label">Toppings</mat-label>
+    <mat-select [formControl]="toppings" multiple data-testid="select-component">
+      <mat-select-trigger>
+        {{toppings.value?.[0] || ''}}
+        @if ((toppings.value?.length || 0) > 1) {
+          <span class="example-additional-selection">
+            (+{{(toppings.value?.length || 0) - 1}} {{toppings.value?.length === 2 ? 'other' : 'others'}})
+          </span>
+        }
+      </mat-select-trigger>
+      @for (topping of toppingList; track topping) {
+    <mat-option [value]="topping" data-testid="select-options">{{topping}}</mat-option>
+  }
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button data-testid="button-component">Basic</button>
+</form>
